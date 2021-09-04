@@ -11,7 +11,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-
+#include <QMessageBox>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -23,22 +23,23 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     void NetworkCleanup();
-    void OnListReadFinished();
 
     ~MainWindow();
 
 private slots:
 
+    void gotUser();
 
     void on_pushButton_clicked();
 
 private:
     QNetworkAccessManager *m_Manager;
     QNetworkRequest m_Request;
-    QNetworkReply m_Reply;
+    QNetworkReply* m_Reply;
     Ui::MainWindow *ui;
     const QString m_URL ="https://api.github.com";
     QString m_Profile;
-    QByteArray* m_Buffer;
+    bool m_GotUser = false;
+    QByteArray m_Buffer;
 };
 #endif // MAINWINDOW_H
